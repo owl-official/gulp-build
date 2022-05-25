@@ -1,5 +1,5 @@
 // List of Dependencies
-const { src, dest, watch, parallel } = require("gulp");
+const { src, dest, watch, parallel, series } = require("gulp");
 
 const scss = require("gulp-sass")(require("sass"));
 const concat = require("gulp-concat");
@@ -98,8 +98,10 @@ exports.imageOptimization = imageOptimization;
 exports.watchRunning = watchRunning;
 exports.cleanDist = cleanDist;
 
-exports.build = parallel(cleanDist, imageOptimization, build);
+// > gulp build
+exports.build = series(cleanDist, imageOptimization, build);
 
+// > gulp
 exports.default = parallel(
     compileScss,
     javascriptMinification,
